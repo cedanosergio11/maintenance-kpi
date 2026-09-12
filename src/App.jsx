@@ -205,117 +205,165 @@ export default function App() {
       </header>
 
       <main className="main">
-        <section className="kpi-row">
-          <div className="kpi-card">
-            <div className="label">
-              {ui.closed}
-              <span className="badge">{i18n.status_in_progress}</span>
-            </div>
-            <div className="value">{fmtNum(focus?.closed)}</div>
-            <div className="hint">{ui.year_default}</div>
-          </div>
-          <div className="kpi-card">
-            <div className="label">{ui.avg_days}</div>
-            <div className="value">{fmtNum(focus?.avg_days, 1)}</div>
-            <div className="hint">{ui.year_default}</div>
-          </div>
-          <div className="kpi-card">
-            <div className="label">{ui.wip}</div>
-            <div className="value">{fmtNum(focus?.wip_ytd ?? focus?.wip, 1)}</div>
-            <div className="hint">
-              {focus === y2026
-                ? `${ui.wip_ytd} ${ui.wip_div_ytd} · ${ui.wip_ann} ${fmtNum(focus?.wip_annualized, 1)} ${ui.wip_div_ann}`
-                : i18n.wip_disclaimer}
-            </div>
-          </div>
-          <div className="kpi-card">
-            <div className="label">{ui.repeat}</div>
-            <div className="value">{fmtPct(focus?.repeat_repair_rate)}</div>
-            <div className="hint">{ui.year_default}</div>
-          </div>
-          <div className="kpi-card">
-            <div className="label">{ui.assets}</div>
-            <div className="value">{fmtNum(focus?.unique_assets)}</div>
-            <div className="hint">{ui.year_default}</div>
+        <section className="section" aria-labelledby="sec-defs">
+          <h2 className="section-title" id="sec-defs">
+            {ui.sec_defs}
+          </h2>
+          <div className="callout">
+            <ul>
+              <li>{ui.def_closed}</li>
+              <li>{ui.def_cycle}</li>
+              <li>{ui.def_year}</li>
+              <li>{ui.def_units}</li>
+            </ul>
           </div>
         </section>
-        <p className="caption" style={{ marginTop: '-0.35rem' }}>
-          {ui.company_status}: 2024 {fmtNum(qualityDays2024, 2)} · 2025 {y2025Status}
-          {' · '}2026 {i18n.status_in_progress}
-          {(y2026?.open || 0) > 0 ? ` (${y2026.open} open)` : ''}
-        </p>
 
-        <section className="grid-2">
-          <DaysRepairChart
-            data={daysByYear}
-            qualityDays2024={qualityDays2024}
-            ui={ui}
-            i18n={i18n}
-          />
-          <WipChart data={wipByYear} ui={ui} i18n={i18n} />
-        </section>
-
-        <section className="grid-2">
-          <StatusPanel panel={panel2025} titleExtra=" · 2025" ui={ui} i18n={i18n} />
-          <StatusPanel
-            panel={panel2026}
-            titleExtra={
-              <>
-                {' · 2026 '}
+        <section className="section" aria-labelledby="sec-company">
+          <h2 className="section-title" id="sec-company">
+            {ui.sec_company}
+          </h2>
+          <div className="kpi-row kpi-3">
+            <div className="kpi-card">
+              <div className="label">
+                {ui.closed}
                 <span className="badge">{i18n.status_in_progress}</span>
-              </>
-            }
+              </div>
+              <div className="value">{fmtNum(focus?.closed)}</div>
+              <div className="hint">{ui.year_default}</div>
+            </div>
+            <div className="kpi-card">
+              <div className="label">{ui.avg_days}</div>
+              <div className="value">{fmtNum(focus?.avg_days, 1)}</div>
+              <div className="hint">{ui.year_default}</div>
+            </div>
+            <div className="kpi-card">
+              <div className="label">{ui.wip}</div>
+              <div className="value">{fmtNum(focus?.wip_ytd ?? focus?.wip, 1)}</div>
+              <div className="hint">
+                {focus === y2026
+                  ? `${ui.wip_ytd} ${ui.wip_div_ytd} · ${ui.wip_ann} ${fmtNum(focus?.wip_annualized, 1)} ${ui.wip_div_ann}`
+                  : i18n.wip_disclaimer}
+              </div>
+            </div>
+          </div>
+          <p className="caption" style={{ marginTop: '-0.15rem' }}>
+            {ui.company_status}: 2024 {fmtNum(qualityDays2024, 2)} · 2025 {y2025Status}
+            {' · '}2026 {i18n.status_in_progress}
+            {(y2026?.open || 0) > 0 ? ` (${y2026.open} open)` : ''}
+          </p>
+          <div className="grid-2">
+            <DaysRepairChart
+              data={daysByYear}
+              qualityDays2024={qualityDays2024}
+              ui={ui}
+              i18n={i18n}
+            />
+            <WipChart data={wipByYear} ui={ui} i18n={i18n} />
+          </div>
+        </section>
+
+        <section className="section" aria-labelledby="sec-breaks">
+          <h2 className="section-title" id="sec-breaks">
+            {ui.sec_breaks}
+          </h2>
+          <div className="kpi-row kpi-3">
+            <div className="kpi-card">
+              <div className="label">{ui.repeat}</div>
+              <div className="value">{fmtPct(focus?.repeat_repair_rate)}</div>
+              <div className="hint">{ui.year_default}</div>
+            </div>
+            <div className="kpi-card">
+              <div className="label">{ui.assets}</div>
+              <div className="value">{fmtNum(focus?.unique_assets)}</div>
+              <div className="hint">{ui.year_default}</div>
+            </div>
+          </div>
+          <div className="grid-2">
+            <StatusPanel panel={panel2025} titleExtra=" · 2025" ui={ui} i18n={i18n} />
+            <StatusPanel
+              panel={panel2026}
+              titleExtra={
+                <>
+                  {' · 2026 '}
+                  <span className="badge">{i18n.status_in_progress}</span>
+                </>
+              }
+              ui={ui}
+              i18n={i18n}
+            />
+          </div>
+          <div className="grid-2">
+            <EquipmentDonut
+              data={equipDonut}
+              equipYear={equipYear}
+              setEquipYear={setEquipYear}
+              ui={ui}
+            />
+            <QuarterChart
+              data={quarterData}
+              qualityDays2024={qualityDays2024}
+              ui={ui}
+              i18n={i18n}
+            />
+          </div>
+          <div className="grid-2">
+            <HBar title={ui.by_branch} data={branchData} ui={ui} />
+            <HBar title={ui.by_department} data={deptData} ui={ui} />
+          </div>
+          {(slips.length > 0 || improves.length > 0) && (
+            <div className="grid-2">
+              {slips.length > 0 && (
+                <CompareChart title={ui.slips} data={slips} ui={ui} />
+              )}
+              {improves.length > 0 && (
+                <CompareChart
+                  title={ui.improves}
+                  data={improves}
+                  ui={ui}
+                  highlight={COLORS.on}
+                />
+              )}
+            </div>
+          )}
+          <Numbers
             ui={ui}
             i18n={i18n}
+            yearKeys={yearKeys}
+            data={data}
+            panel2025={panel2025}
+            branchData={branchData}
+            deptData={deptData}
+            quarterData={quarterData}
           />
         </section>
 
-        <section className="grid-2">
-          <EquipmentDonut
-            data={equipDonut}
-            equipYear={equipYear}
-            setEquipYear={setEquipYear}
-            ui={ui}
-          />
-          <QuarterChart
-            data={quarterData}
-            qualityDays2024={qualityDays2024}
-            ui={ui}
-            i18n={i18n}
-          />
+        <section className="section" aria-labelledby="sec-limits">
+          <h2 className="section-title" id="sec-limits">
+            {ui.sec_limits}
+          </h2>
+          <div className="note-card">
+            <ul>
+              <li>{ui.limit_helix}</li>
+              <li>{ui.limit_r}</li>
+              <li>{ui.limit_opens}</li>
+              <li>{ui.limit_year}</li>
+            </ul>
+          </div>
         </section>
 
-        <section className="grid-2">
-          <HBar title={ui.by_branch} data={branchData} ui={ui} />
-          <HBar title={ui.by_department} data={deptData} ui={ui} />
+        <section className="section" aria-labelledby="sec-reco">
+          <h2 className="section-title" id="sec-reco">
+            {ui.sec_reco}
+          </h2>
+          <div className="note-card">
+            <ol>
+              <li>{ui.reco_1}</li>
+              <li>{ui.reco_2}</li>
+              <li>{ui.reco_3}</li>
+            </ol>
+          </div>
         </section>
-
-        {(slips.length > 0 || improves.length > 0) && (
-          <section className="grid-2">
-            {slips.length > 0 && (
-              <CompareChart title={ui.slips} data={slips} ui={ui} />
-            )}
-            {improves.length > 0 && (
-              <CompareChart
-                title={ui.improves}
-                data={improves}
-                ui={ui}
-                highlight={COLORS.on}
-              />
-            )}
-          </section>
-        )}
-
-        <Numbers
-          ui={ui}
-          i18n={i18n}
-          yearKeys={yearKeys}
-          data={data}
-          panel2025={panel2025}
-          branchData={branchData}
-          deptData={deptData}
-          quarterData={quarterData}
-        />
       </main>
 
       <footer className="footer">
