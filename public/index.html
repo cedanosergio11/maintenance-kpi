@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maintenance KPI</title>
+    <style>
+      body {
+        margin: 2rem;
+        font-family: system-ui, sans-serif;
+        background: #0e1116;
+        color: #e8ebe6;
+      }
+      code { color: #93a09a; }
+    </style>
+  </head>
+  <body>
+    <h1>Maintenance KPI</h1>
+    <p>Stub. Dashboard UI lands next. Data: <code>/maintenance-kpi/kpi-dashboard-data.json</code></p>
+    <pre id="meta">loading…</pre>
+    <script>
+      fetch("/maintenance-kpi/kpi-dashboard-data.json")
+        .then((r) => r.json())
+        .then((d) => {
+          document.getElementById("meta").textContent = JSON.stringify(d.meta, null, 2);
+        })
+        .catch((e) => {
+          document.getElementById("meta").textContent = String(e);
+        });
+    </script>
+  </body>
+</html>
